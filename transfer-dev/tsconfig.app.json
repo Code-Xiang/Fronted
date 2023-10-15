@@ -1,6 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  // , "src/**/*" 为什么去掉这个之后，index.ts就不报错 添加 "module/**/*" 去掉 "src/**/*"也不报错
+  "include": ["env.d.ts", "src/**/*.vue", "module/**/*"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,

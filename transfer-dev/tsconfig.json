@@ -12,8 +12,9 @@
     }
   ],
   // 这里必须加如包含
-  "include" :[
-     "./modules/xuewei-ui/*.ts",
-     "./src/*"
-  ]
+  // "include" :[
+  //    "./modules/xuewei-ui/*.ts",
+  //    "./src/*",
+  //    "src/**/*.ts",
+  // ]
 }
