@@ -83,7 +83,7 @@ const data = [
 </script>
 
 <template>
-    <div class="wrapper">
+    <div>
       <transfer :data="data" right-title="已选择机型1"></transfer>
     </div>
 </template>
