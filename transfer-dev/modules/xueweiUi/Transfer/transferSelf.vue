@@ -31,7 +31,18 @@ const options = props.data.map(({  title }) => title)
 const [ targetIndex,setTargetIndex] = useTargetIndex(0);
 const { leftTitle } = useComputedData(props.data, targetIndex);
 </script>
-<style>
+<style lang="scss" scoped>
+.transfer {
+  display: flex;
+  flex-direction: row;
+  width: 360px;
+  height: 300px;
+  border: 1px solid #ddd;
+}
+.box {
+  width: 120px;
+  height: 100%;
+}
 @media (min-width: 1024px) {
   .about {
     display: flex;
