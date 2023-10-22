@@ -1,13 +1,14 @@
 <template>
   <div>
     <div>
-      <select name="" id="" @change="setTargetIndex($event.target.value)">
-        <option v-for="(title, index) of options" :value="index" :key="index">{{ title }}</option>
-      </select>
+      <transferSelector
+      :data="options"
+      @select-change="setTargetIndex"
+      ></transferSelector>
     </div>
     <div class="transfer">
       <div class="box left-list">
-        <h1 class="list-title">{{ leftTitle }}</h1>
+        <listTitle :title="leftTitle"></listTitle>
         <div>
           <div
             v-for="item of leftListData"
@@ -35,7 +36,7 @@
         >&gt;</button>
       </div>
       <div class="box right-list">
-        <h1 class="list-title">{{ rightTitle }}</h1>
+        <listTitle :title="rightTitle"></listTitle>
         <div>
           <div
             v-for="item of rightListData"
@@ -56,8 +57,10 @@
   </div>
 </template>
 <script setup>
+import transferSelector from './components/transferSelector'
 import propsDefination from './extends/props'
 import { useTargetIndex, useComputedData, useRightListData, useCheckedData } from './extends/hooks'
+import listTitle from './components/listTitle'
 const props = defineProps(propsDefination)
 const options = props.data.map(({ title }) => title)
 const [targetIndex, setTargetIndex] = useTargetIndex(0)
@@ -79,18 +82,6 @@ const setCheckedData = (checked, leftOrRight, item) => {
 .box {
   width: 120px;
   height: 100%;
-  .list-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 38px;
-    font-weight: normal;
-    margin: 0;
-    color: #666;
-    border-bottom: 1px solid #ddd;
-    background-color: #efefef;
-    font-size: 14px;
-  }
   .list-item {
     display: flex;
     align-items: center;
