@@ -1,10 +1,10 @@
-import { computed, ref } from "vue";
+// import { log } from "console";
+import { computed, reactive, ref } from "vue";
 
 export function useTargetIndex(initialIndex: any) {
     const targetIndex = ref(initialIndex);
     function setTargetIndex(newIndex: any) {
         targetIndex.value = Number(newIndex);
-        console.log('targetIndex', targetIndex.value)
     }
     return [
         targetIndex,
@@ -12,9 +12,79 @@ export function useTargetIndex(initialIndex: any) {
     ]
 }
 
-export function useComputedData (data: any, targetIndex:any) {
+export function useRightListData(initialData, checkedData) {
+    const rightListData = ref(initialData);
+    function addRightListData(newData) {
+        rightListData.value = [...rightListData.value, ...newData];
+        checkedData.left = [];
+    }
+    function removeRightListData(newData) {
+        newData.forEach(item => {
+            rightListData.value = rightListData.value.filter(i => i.id !== item.id)
+        });
+        checkedData.right = [];
+    }
+    return [
+        rightListData,
+        addRightListData,
+        removeRightListData
+    ]
+}
+
+export function useCheckedData() {
+    const checkedData = reactive({
+        left: [],
+        right: []
+    })
+    function addCheckedData(leftOrRight, item) {
+        switch (leftOrRight) {
+            case 'left':
+                checkedData.left.push(item);
+                break;
+            case 'right':
+                checkedData.right.push(item);
+                break;
+            default:
+                break;
+        }
+    }
+    function removeCheckedData(leftOrRight, id) {
+        switch (leftOrRight) {
+            case 'left':
+                checkedData.left = checkedData.left.filter(item => item.id !== id);
+                break;
+            case 'right':
+                checkedData.right = checkedData.right.filter(item => item.id !== id);
+                break;
+            default:
+                break;
+        }
+    }
+    return [
+        checkedData,
+        addCheckedData,
+        removeCheckedData
+    ]
+}
+
+export function useComputedData(data: any, targetIndex: any, rightListData: any,checkedData: any) {
     const leftTitle = computed(() => data[targetIndex.value].title);
+    const leftListData = computed(() => {
+        const { data: currentData } = data[targetIndex.value];
+        return currentData.filter(item => {
+            if (!rightListData.value.find(({ id }) => item.id === id)) {
+                return item;
+            }
+        })
+    })
+    const transferButtonDisabled = computed(() => ({
+        right: checkedData.left.length === 0,
+        left: checkedData.right.length === 0
+    })
+    )
     return {
-        leftTitle
+        leftTitle,
+        leftListData,
+        transferButtonDisabled
     }
 }
