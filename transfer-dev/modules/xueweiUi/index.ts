@@ -1,9 +1,11 @@
-import Transfer from './Transfer/transferSelf.vue'
+import Transfer from './Transfer/transferSelf.vue';
+import Select from './Select/modelSelect.vue';
 // const components = {
 //     Transfer
 // }
 export {
-    Transfer
+    Transfer,
+    Select
 }
 // export default {
 //     install(app) {

@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import { Transfer } from '../modules/xueweiUi'
-// import {  Transfer } from '@/components/xueweiUi'
+import { Select } from '../modules/xueweiUi'
+import { ySelect } from "@/components/select/ySelect.vue";
+import { yOption } from "@/components/select/yOption.vue";
 const data = [
   {
     title: '华为',
@@ -80,13 +82,28 @@ const data = [
     ]
   }
 ]
+const myValue = ref('key5')
+const options = ref([
+  { key: "key1", label: "选项1" }, { key: "key2", label: "选项2" }, { key: "key3", label: "选项3" }, { key: "key4", label: "选项4changhcadfjadfajhjfkjg" }, { key: "key5", label: "选项5" }, { key: "key6", label: "选项6" }, { key: "key7", label: "选项7" },
+
+])
 </script>
 
 <template>
-    <div>
-      <transfer :data="data" right-title="已选择机型1"></transfer>
-    </div>
+  <div>
+    <transfer :data="data" right-title="已选择机型1"></transfer>
+  </div>
+  <div>
+    <div>---------------------------</div>
+    <div>---------------------------</div>
+    <select></select>
+  </div>
+  <div>
+    <!-- <hello-world></hello-world> -->
+    <y-select v-model="myValue">
+      <y-option v-for="item in options" :label="item.label" :value="item.key" :key="item.key"></y-option>
+    </y-select>
+  </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
