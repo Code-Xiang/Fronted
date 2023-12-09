@@ -13,5 +13,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
     extensions: ['.vue', '.ts']
+  },
+  server: {
+    host: true,
+    port: 8081 // 配置端口号
   }
 })

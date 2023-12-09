@@ -1,5 +1,5 @@
 // import { log } from "console";
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, type Ref } from "vue";
 
 export function useTargetIndex(initialIndex: any) {
     const targetIndex = ref(initialIndex);
@@ -31,12 +31,47 @@ export function useRightListData(initialData, checkedData) {
     ]
 }
 
+// interface Item {
+//     id: string; 
+// }
+
+// interface CheckedData {
+//     left: any[];
+//     right: any[];
+// }
+
+// export function useRightListData(
+//     initialData: Item[],
+//     checkedData: CheckedData
+// ): [Ref<Item[]>, (newData: Item[]) => void, (newData: Item[]) => void] {
+//     const rightListData = ref<Item[]>(initialData);
+
+//     function addRightListData(newData: Item[]): void {
+//         rightListData.value = [...rightListData.value, ...newData];
+//         checkedData.left = [];
+//     }
+
+//     function removeRightListData(newData: Item[]): void {
+//         rightListData.value = rightListData.value.filter(
+//             (i) => !newData.some((item) => item.id === i.id)
+//         );
+//         checkedData.right = [];
+//     }
+
+//     return [rightListData, addRightListData, removeRightListData];
+// }
+
+
 export function useCheckedData() {
     const checkedData = reactive({
-        left: [],
-        right: []
+        left: [
+            // {id:''}
+        ],
+        right: [
+            // {id:''}
+        ]
     })
-    function addCheckedData(leftOrRight, item) {
+    function addCheckedData(leftOrRight: any, item: any) {
         switch (leftOrRight) {
             case 'left':
                 checkedData.left.push(item);
@@ -48,7 +83,7 @@ export function useCheckedData() {
                 break;
         }
     }
-    function removeCheckedData(leftOrRight, id) {
+    function removeCheckedData(leftOrRight: any, id: any) {
         switch (leftOrRight) {
             case 'left':
                 checkedData.left = checkedData.left.filter(item => item.id !== id);
@@ -67,7 +102,18 @@ export function useCheckedData() {
     ]
 }
 
-export function useComputedData(data: any, targetIndex: any, rightListData: any,checkedData: any) {
+export function useDragedItem() {
+    const dragedItem = ref(null);
+    function setDragedItem(item: any) {
+        dragedItem.value = item;
+    }
+    return [
+        dragedItem,
+        setDragedItem
+    ]
+}
+
+export function useComputedData(data: any, targetIndex: any, rightListData: any, checkedData: any) {
     const leftTitle = computed(() => data[targetIndex.value].title);
     const leftListData = computed(() => {
         const { data: currentData } = data[targetIndex.value];
