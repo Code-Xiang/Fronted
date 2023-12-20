@@ -1,15 +1,18 @@
 <template>
-  <Person/>
+  <div class="app">
+    <h1>nihao</h1>
+    <Person/>
+  </div>
 </template>
 
 <script lang="ts">
-import Person from "./components/Person.vue";
+import  Person from "./components/Person.vue";
 export default {
   name: "App",
   components: {
-    Person,
-  },
-};
+    Person
+  }
+}
 </script>
 
 <style scoped>
