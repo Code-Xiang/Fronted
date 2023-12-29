@@ -1,51 +1,58 @@
 <!--  -->
 <template>
   <div class="person">
-    <h1>情况二：监视【ref】定义的【对象类型】数据</h1>
     <h2>姓名：{{ person.name }}</h2>
     <h2>年龄：{{ person.age }}</h2>
-    <button @click="changName">修改名字</button>
-    <button @click="changAge">修改年龄</button>
-    <button @click="changePerson">修改all</button>
+    <h2>汽车：{{ person.car.c1 }}、{{ person.car.c2 }}</h2>
+    <button @click="changeName">修改名字</button>
+    <button @click="changeAge">修改年龄</button>
+    <button @click="changeC1">修改第一台车</button>
+    <button @click="changeC2">修改第二台车</button>
+    <button @click="changeCar">修改整个车</button>
   </div>
 </template>
 
 <script lang="ts" setup name="Person">
-import { ref, watch } from "vue";
+import { reactive, watch } from "vue";
 // 数据
-let person = ref({
+let person = reactive({
   name: "张三",
   age: 18,
+  car: {
+    c1: "奔驰",
+    c2: "宝马",
+  },
 });
 // 方法
-const changName = () => {
-  person.value.name += "~";
+const changeName = () => {
+  person.name += "~";
 };
-const changAge = () => {
-  person.value.age += 1;
+const changeAge = () => {
+  person.age += 1;
 };
-const changePerson = () => {
-  person.value = { name: "李四", age: 90 };
+const changeC1 = () => {
+  person.car.c1 = "奥迪";
 };
-/* alt+shift+a
-监视 情况一，监视【ref】定义的【对象类型】数据，监视的是对象的地址值，若想监视对象内部属性的变化【即上方的name,age】，需要手动开启深度监视
-修改对象中属性的时候，newValue和oldValue是同一个值
-修改对象时候则分新旧值
- */
-watch(person,(newValue,oldValue) => {
-  console.log('person变化了',newValue,oldValue);
-},{
-  deep: true,
-  immediate: true // 立即监视，只要一上来不管数据有没有变化都要监视一次
-})
-
-
+const changeC2 = () => {
+  person.car.c2 = "大众";
+};
+const changeCar = () => {
+  person.car = { c1: "雅迪", c2: "艾玛" };
+};
 /* 
-watch的第一个参数是：被监视的对象
-watch的第二个参数是：监视的回调
-watch的第三个参数是：配置的参数
- */
-
+() => {
+  return person.name
+}
+  只监视person.name
+*/
+watch(
+  () => 
+     person.name
+  ,
+  (newValue, oldValue) => {
+    console.log("person.name发生变化了", newValue, oldValue);
+  }
+);
 </script>
 <style scoped>
 .person {
