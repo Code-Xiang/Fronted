@@ -44,7 +44,4 @@ eventBus.subscribe("eventX", () => {
 // 发布事件eventX
 eventBus.publish("eventX");
 
-// 输出
-> 模块A
-> 模块B
-> 模块C
+
