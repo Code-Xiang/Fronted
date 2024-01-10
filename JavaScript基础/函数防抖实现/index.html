@@ -1,0 +1,70 @@
+<body>
+    <div>
+        账户：<input type="text" id="myinput">
+    </div>
+    <h1>nihao1</h1>
+    <h2>888</h2>
+</body>
+<script>
+    //JS部分
+    function debounce(fun, wait = 1500) {//ES6语法 wait=1500 设置参数默认值，如果没有输入wait就会使用1500
+        let timeout = null
+        return function () {
+            console.log(this);
+            console.log(arguments);
+            // 方案一
+            let _this = this;
+            let _arg = arguments;
+            if (timeout) {//如果存在定时器就清空
+                clearTimeout(timeout)
+            }
+            timeout = setTimeout(function () {
+                console.log(this);
+                console.log(arguments);
+                // 方案一
+                // 这里可以将 _this 带入到这里来
+                console.log(_this);
+                console.log(_arg);
+                // 方案二
+                /* 
+                    可以直接使用 箭头函数，因为箭头函数没有this，他是通过作用域链来决定其值的。
+                    他的this绑定是最近一层非箭头函数，负责为undefind
+                */
+                fun.apply(_this,_arg)
+            }, wait)
+        }
+    }
+    function testUname() {
+        console.log('testUname中的this', this);
+        /* 
+            没传入之前的this => window
+            使用 fun.apply(_this, _arg)之后
+            传入的值为： <input type="text" id="myinput">
+        */
+        console.log("输入结束！")
+    }
+
+    document.getElementById('myinput').addEventListener('input', debounce(testUname, 1000))
+    const windowfun = () => {
+        console.log("this::", this);
+        const Arrow = () => {
+            console.log('箭头里面的箭头：', this);
+            /* 
+                这里为外层的this，外层的this
+                为window，所以这里为window
+            */
+        }
+        function sameFun() {
+            console.log("sameFun", this);
+            const sameinArrowFun = () => {
+                console.log("普通函数里面的this", this)
+            }
+
+            return sameinArrowFun
+        }
+        Arrow()
+        const innerArrowFun =  sameFun()
+        innerArrowFun()
+    }
+    // windowfun()
+</script>
