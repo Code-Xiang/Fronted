@@ -1,0 +1,17 @@
+<script src="../../dist/vue.global.js"></script>
+<div id="app"></div>
+
+<script>
+    const { reactive, effect } = Vue
+    const obj = reactive({
+        name: 'wangling'
+    })
+
+    effect(() => {
+        document.querySelector('#app').innerHTML = obj.name
+    })
+    setTimeout(() => {
+        debugger
+        obj.name = '啦啦啦'
+    }, 3000)
+</script>
