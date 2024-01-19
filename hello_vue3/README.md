@@ -41,3 +41,12 @@ npm run dev
 ```sh
 npm run build
 ```
+
+- Vue3的生命周期
+
+>创建阶段： `setup`
+>挂载阶段： `onBeforeMount`、`onMounted`
+>更新阶段： `onBeforeUpdate`、`onUpdated`
+>卸载阶段： `onBeforeUnmount`、`onUnmounted`
+
+- 常用的钩子： `onMounted`(挂载完毕)、`onUpdated`(更新完毕)、`onBeforeUnmount`(下载之前)
