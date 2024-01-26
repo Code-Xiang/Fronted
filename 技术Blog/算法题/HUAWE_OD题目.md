@@ -228,7 +228,7 @@ function searchLast(arr, target) {
             if (mid === arr.length - 1 || arr[mid] !== arr[mid + 1]) {
                 return mid;
             } else {
-                low = mid + 1;
+                low = mid + 1; // return mid + 1 道理一样的
             }
         }
     }
